@@ -12,6 +12,8 @@ import {APP_BASE_HREF} from '@angular/common';
 import {CustomModule} from './custom.module';
 import {UserComponent} from './users/user.component';
 import {ToDoComponent} from './toDos/toDo.component';
+import {ToDoListComponent} from './toDos/toDo-list.component';
+import {ToDoListService} from './toDos/toDo-list.service';
 
 
 @NgModule({
@@ -32,6 +34,7 @@ import {ToDoComponent} from './toDos/toDo.component';
   ],
   providers: [
     UserListService,
+    ToDoListService,
     {provide: APP_BASE_HREF, useValue: '/'}
   ],
   bootstrap: [AppComponent]

@@ -5,7 +5,7 @@ import {ToDo} from './toDo';
 import {Observable} from 'rxjs';
 
 @Component({
-  selector: 'app-toDo-list-component',
+  selector: 'app-toDo-list.component',
   templateUrl: 'toDo-list.component.html',
   styleUrls: ['./toDo-list.component.css'],
   providers: []
@@ -16,8 +16,8 @@ export class ToDoListComponent implements OnInit {
   public toDos: ToDo[];
   public filteredToDos: ToDo[];
 
-  public toDoName: string;
-  public toDoAge: number;
+  public toDoOwner: string;
+  public t: number;
 
 
   // Inject the ToDoListService into this component.
@@ -30,13 +30,8 @@ export class ToDoListComponent implements OnInit {
 
   }
 
-  public updateName(newName: string): void {
-    this.toDoName = newName;
-    this.updateFilter();
-  }
-
-  public updateAge(newAge: number): void {
-    this.toDoAge = newAge;
+  public updateOwner(newOwner: string): void {
+    this.toDoOwner = newOwner;
     this.updateFilter();
   }
 
@@ -44,8 +39,8 @@ export class ToDoListComponent implements OnInit {
     this.filteredToDos =
       this.toDoListService.filterToDos(
         this.toDos,
-        this.toDoName,
-        this.toDoAge);
+        this.toDoOwner,
+      );
   }
 
   /**
