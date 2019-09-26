@@ -13,7 +13,7 @@ export class ToDoListService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getToDos(): Observable<ToDo[]> {
+  getT(): Observable<ToDo[]> {
     return this.httpClient.get<ToDo[]>(this.toDoUrl);
   }
 
@@ -21,7 +21,7 @@ export class ToDoListService {
     return this.httpClient.get<ToDo>(this.toDoUrl + '/' + id);
   }
 
-  filterToDos(toDos: ToDo[], searchOwner?: string): ToDo[] {
+  filterToDos(toDos: ToDo[], searchOwner?: string, searchAge?: number): ToDo[] {
 
     let filteredToDos = toDos;
 
@@ -33,6 +33,8 @@ export class ToDoListService {
         return !searchOwner || toDo.owner.toLowerCase().indexOf(searchOwner) !== -1;
       });
     }
+
+
 
     return filteredToDos;
   }
