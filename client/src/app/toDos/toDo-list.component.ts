@@ -1,39 +1,65 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {ToDoListService} from './toDo-list.service';
+import {ToDo} from './toDo';
 
 import {Observable} from 'rxjs';
 
-import {ToDo} from './toDo';
-import {environment} from '../../environments/environment';
+@Component({
+  selector: 'app-toDo-list-component',
+  templateUrl: 'toDo-list.component.html',
+  styleUrls: ['./toDo-list.component.css'],
+  providers: []
+})
 
-@Injectable()
-export class ToDoListService {
-  readonly toDoUrl: string = environment.API_URL + 'toDos';
+export class ToDoListComponent implements OnInit {
+  // These are public so that tests can reference them (.spec.ts)
+  public toDos: ToDo[];
+  public filteredToDos: ToDo[];
 
-  constructor(private httpClient: HttpClient) {
+  public toDoName: string;
+  public toDoAge: number;
+
+
+  // Inject the ToDoListService into this component.
+  // That's what happens in the following constructor.
+  //
+  // We can call upon the service for interacting
+  // with the server.
+
+  constructor(private toDoListService: ToDoListService) {
+
   }
 
-  getToDos(): Observable<ToDo[]> {
-    return this.httpClient.get<ToDo[]>(this.toDoUrl);
+  public updateName(newName: string): void {
+    this.toDoName = newName;
+    this.updateFilter();
   }
 
-  getToDoById(id: string): Observable<ToDo> {
-    return this.httpClient.get<ToDo>(this.toDoUrl + '/' + id);
+  public updateAge(newAge: number): void {
+    this.toDoAge = newAge;
+    this.updateFilter();
   }
 
-  filterToDos(toDos: ToDo[], searchOwner?: string): ToDo[] {
+  public updateFilter() {
+    this.filteredToDos =
+      this.toDoListService.filterToDos(
+        this.toDos,
+        this.toDoName,
+        this.toDoAge);
+  }
 
-    let filteredToDos = toDos;
-
-    // Filter by owner
-    if (searchOwner != null) {
-      searchOwner = searchOwner.toLowerCase();
-
-      filteredToDos = filteredToDos.filter(toDo => {
-        return !searchOwner || toDo.owner.toLowerCase().indexOf(searchOwner) !== -1;
+  /**
+   * Starts an asynchronous operation to update the toDos list
+   *
+   */
+  ngOnInit(): void {
+    const toDos: Observable<ToDo[]> = this.toDoListService.getToDos();
+    toDos.subscribe(
+      returnedToDos => {
+        this.toDos = returnedToDos;
+      },
+      err => {
+        console.log(err);
       });
-    }
-
-    return filteredToDos;
   }
 }

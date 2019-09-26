@@ -27,6 +27,7 @@ import {ToDoComponent} from './toDos/toDo.component';
     UserListComponent,
     UserComponent,
     ToDoComponent,
+    ToDoListComponent,
 
   ],
   providers: [

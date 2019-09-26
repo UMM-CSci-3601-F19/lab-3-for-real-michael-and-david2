@@ -13,7 +13,7 @@ export class ToDoListService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getT(): Observable<ToDo[]> {
+  getToDos(): Observable<ToDo[]> {
     return this.httpClient.get<ToDo[]>(this.toDoUrl);
   }
 
