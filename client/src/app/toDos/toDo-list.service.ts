@@ -8,7 +8,7 @@ import {environment} from '../../environments/environment';
 
 @Injectable()
 export class ToDoListService {
-  readonly toDoUrl: string = environment.API_URL + 'toDos';
+  readonly toDoUrl: string = environment.API_URL + 'todos';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -21,7 +21,7 @@ export class ToDoListService {
     return this.httpClient.get<ToDo>(this.toDoUrl + '/' + id);
   }
 
-  filterToDos(toDos: ToDo[], searchOwner?: string, searchAge?: number): ToDo[] {
+  filterToDos(toDos: ToDo[], searchOwner?: string, searchStatus?: boolean): ToDo[] {
 
     let filteredToDos = toDos;
 
@@ -32,6 +32,12 @@ export class ToDoListService {
       filteredToDos = filteredToDos.filter(toDo => {
         return !searchOwner || toDo.owner.toLowerCase().indexOf(searchOwner) !== -1;
       });
+    }
+
+    if(searchStatus != null){
+      filteredToDos = filteredToDos.filter(toDo => {
+        return !searchStatus || (toDo.status === searchStatus)
+      })
     }
 
 
