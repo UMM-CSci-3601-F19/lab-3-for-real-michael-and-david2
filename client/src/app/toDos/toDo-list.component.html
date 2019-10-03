@@ -11,6 +11,13 @@
             placeholder="Filter by owner"
             (input)="updateOwner($event.target.value)">
         </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            id="toDoCategory"
+            placeholder="Filter by Category"
+            (input)="updateCategory($event.target.value)">
+        </mat-form-field>
 
         <!--<mat-form-field>-->
         <!--<input matInput id="toDoCompany" #input type="text" placeholder="Search for company" (input)="contentChange($event.target.value)">-->

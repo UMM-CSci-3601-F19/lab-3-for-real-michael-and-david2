@@ -21,7 +21,7 @@ export class ToDoListService {
     return this.httpClient.get<ToDo>(this.toDoUrl + '/' + id);
   }
 
-  filterToDos(toDos: ToDo[], searchOwner?: string, searchStatus?: boolean): ToDo[] {
+  filterToDos(toDos: ToDo[], searchOwner?: string, searchCategory?: string): ToDo[] {
 
     let filteredToDos = toDos;
 
@@ -33,10 +33,12 @@ export class ToDoListService {
         return !searchOwner || toDo.owner.toLowerCase().indexOf(searchOwner) !== -1;
       });
     }
+    //filter by category
+    if(searchCategory != null){
+      searchCategory = searchCategory.toLowerCase();
 
-    if(searchStatus != null){
       filteredToDos = filteredToDos.filter(toDo => {
-        return !searchStatus || (toDo.status === searchStatus)
+        return !searchCategory || toDo.category.toLowerCase().indexOf(searchCategory) !== -1;
       })
     }
 
