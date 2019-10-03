@@ -17,7 +17,7 @@ export class ToDoListComponent implements OnInit {
   public filteredToDos: ToDo[];
 
   public toDoOwner: string;
-  public toDoStatus: boolean;
+  public toDoCategory: string;
 
 
   // Inject the ToDoListService into this component.
@@ -35,12 +35,17 @@ export class ToDoListComponent implements OnInit {
     this.updateFilter();
   }
 
+  public updateCategory(newCategory: string): void{
+    this.toDoCategory = newCategory;
+    this.updateFilter();
+  }
+
   public updateFilter() {
     this.filteredToDos =
       this.toDoListService.filterToDos(
         this.toDos,
         this.toDoOwner,
-        this.toDoStatus
+        this.toDoCategory
       );
   }
 
